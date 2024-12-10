@@ -6,28 +6,35 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "prettier": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
+    "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix"
   },
   "dependencies": {
     "@mantine/core": "^7.15.0",
     "@mantine/hooks": "^7.15.0",
     "next": "15.0.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "recharts": "^2.14.1"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.16.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.4",
+    "eslint": "^9.16.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-next": "^12.0.0",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.13.0",
     "postcss": "^8.4.49",
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.18.0"
   }
 }
