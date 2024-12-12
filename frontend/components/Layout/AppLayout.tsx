@@ -9,7 +9,7 @@ import { CandlestickChart } from "components/Charts/CandlestickChart";
 import { InstrumentDetails } from "components/Content/InstrumentDetails";
 import { instruments } from "data/instrumentsData";
 
-function App() {
+function AppLayout() {
   const [activeTab, setActiveTab] = useState("home");
   const [selectedInstrument, setSelectedInstrument] = useState<string | null>(
     null
@@ -73,4 +73,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppLayout;

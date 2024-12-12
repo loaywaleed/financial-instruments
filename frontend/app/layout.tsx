@@ -5,12 +5,34 @@ import {
   ColorSchemeScript,
   MantineProvider,
   mantineHtmlProps,
+  createTheme,
 } from "@mantine/core";
 
 export const metadata = {
   title: "Financial Instruments",
-  description: "a simple financial instruments app",
+  description: "A simple financial instruments app",
 };
+
+// Customize Mantine theme
+const theme = createTheme({
+  // Example customization: you can add your own theme properties here
+  colors: {
+    primary: [
+      "#E3F2FD",
+      "#BBDEFB",
+      "#90CAF9",
+      "#64B5F6",
+      "#42A5F5",
+      "#2196F3",
+      "#1E88E5",
+      "#1976D2",
+      "#1565C0",
+      "#0D47A1",
+    ],
+  },
+  primaryColor: "primary",
+  fontFamily: "'Inter', sans-serif",
+});
 
 export default function RootLayout({
   children,
@@ -23,7 +45,9 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>{children}</MantineProvider>
+        <MantineProvider theme={theme} defaultColorScheme="light">
+          {children}
+        </MantineProvider>
       </body>
     </html>
   );
