@@ -1,0 +1,10 @@
+[
+  { "name": "Stock" },
+  { "name": "Cryptocurrency" },
+  { "name": "Exchange traded commodity" },
+  { "name": "Exchange traded fund" },
+  { "name": "Fund" },
+  { "name": "Index" },
+  { "name": "Commodity" },
+  { "name": "Mutual fund" }
+]

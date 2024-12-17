@@ -6,9 +6,10 @@ export const globalErrorHandlerMiddleware = (
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   const statusCode = err instanceof ApiError ? err.statusCode : 500;
+  logger.error(`${req.method} ${req.path} - ${statusCode} - ${err.message} - ${req.ip}`);
   res.status(statusCode).json({
     message: err.message || 'Internal Server Error',
     stack: process.env.NODE_ENV === 'production' ? undefined : err.stack,

@@ -1,8 +1,10 @@
-import express, { Application } from "express";
-import helmet from "helmet";
-import { rateLimiterMiddleware } from "./middleware/rateLimiterMiddleware";
-import dataRoutes from "./routes/dataRoutes";
-import { globalErrorHandlerMiddleware } from "./middleware/errorMiddleware";
+import express, { Application } from 'express';
+import helmet from 'helmet';
+import { rateLimiterMiddleware } from './middleware/rateLimiterMiddleware';
+import dataRoutes from './routes/dataRoutes';
+import instrumentTypesRoutes from './routes/instrumentTypesRoutes';
+import { globalErrorHandlerMiddleware } from './middleware/errorMiddleware';
+import instrumentRoutes from './routes/instrumentRoutes';
 
 const PORT = process.env.PORT || 8000;
 
@@ -14,7 +16,9 @@ app.use(helmet());
 app.use(rateLimiterMiddleware);
 
 // Routes
-app.use("/api/data", dataRoutes);
+app.use('/api/data', dataRoutes);
+app.use('/api/instrumentTypes', instrumentTypesRoutes);
+app.use('/api/instruments', instrumentRoutes);
 
 // Global   Error handling middleware
 app.use(globalErrorHandlerMiddleware);

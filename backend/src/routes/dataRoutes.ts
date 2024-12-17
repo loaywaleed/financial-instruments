@@ -1,9 +1,5 @@
 import express from 'express';
-import {
-  loadData,
-  getmetaData,
-  deleteData,
-} from '../controllers/dataController';
+import { loadData, getmetaData, deleteData } from '../controllers/dataController';
 
 const dataRoutes = express.Router();
 

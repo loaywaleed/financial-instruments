@@ -15,16 +15,15 @@ export async function insertDataService(
     const metadataCollection = db.collection('metadata');
     const exchangeCollection = db.collection('exchange');
     const candleCollection = db.collection('candle');
+    const instrumentTypesCollection = db.collection('instrumentTypes');
 
-    await metadataCollection.insertMany(
-      Array.isArray(metadata) ? metadata : [metadata]
+    await instrumentTypesCollection.insertMany(
+      Array.isArray(instrumentTypes) ? instrumentTypes : [instrumentTypes]
     );
-    await exchangeCollection.insertMany(
-      Array.isArray(exchange) ? exchange : [exchange]
-    );
-    await candleCollection.insertMany(
-      Array.isArray(candle) ? candle : [candle]
-    );
+
+    await metadataCollection.insertMany(Array.isArray(metadata) ? metadata : [metadata]);
+    await exchangeCollection.insertMany(Array.isArray(exchange) ? exchange : [exchange]);
+    await candleCollection.insertMany(Array.isArray(candle) ? candle : [candle]);
     return 'Data loaded successfully';
   } catch (error) {
     throw new ApiError('Failed to insert data', 400);
@@ -64,6 +63,7 @@ export async function DeleteAllDataService() {
     db.collection('metadata').deleteMany({});
     db.collection('exchange').deleteMany({});
     db.collection('candle').deleteMany({});
+    db.collection('instrumentTypes').deleteMany({});
     return 'Data deleted successfully';
   } catch (error) {
     throw new ApiError('Failed to delete data', 400);
