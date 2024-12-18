@@ -8,9 +8,12 @@ import { Request, Response } from 'express';
 
 export const getAllInstruments = asyncHandler(async (req: Request, res: Response) => {
   const type = req.query.type as string;
-  const result = type
-    ? await fetchInstrumentByTypeService(type)
-    : await fetchAllInstrumentsService();
+  let result;
+  if (type) {
+    result = await fetchInstrumentByTypeService(type);
+  } else {
+    result = await fetchAllInstrumentsService();
+  }
   res.status(200).json(result);
 });
 
