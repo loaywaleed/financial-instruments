@@ -13,6 +13,7 @@ interface SidebarProps {
 interface Exchange {
   _id: string;
   name: string;
+  nameExchange: string;
 }
 
 export function Sidebar({
@@ -32,7 +33,7 @@ export function Sidebar({
           [instrumentType]: response.data,
         }));
       } catch (error) {
-        console.error(`Error fetching exchanges for ${instrumentType}:`, error);
+        console.log(`Error fetching exchanges for ${instrumentType}:`, error);
       }
     };
 
@@ -67,6 +68,7 @@ export function Sidebar({
                   label={exchange.name}
                   leftSection={<LineChart size={16} />}
                   onClick={() => onExchangeSelect(instrument.id, exchange._id)}
+                  description={exchange.nameExchange}
                 />
               ))}
             </Accordion.Panel>
