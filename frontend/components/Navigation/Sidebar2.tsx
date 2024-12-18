@@ -11,7 +11,7 @@ interface SidebarProps {
 }
 
 interface Exchange {
-  _id: string;
+  id: string;
   name: string;
 }
 
@@ -42,37 +42,27 @@ export function Sidebar({
   }, []);
 
   return (
-    <div className="h-full overflow-y-auto">
-      <Accordion
-        variant="separated"
-        classNames={{
-          root: "h-full",
-          item: "transition-all duration-300 ease-in-out",
-          panel: "transition-all duration-300 ease-in-out",
-          content: "transition-all duration-300 ease-in-out",
-        }}
-      >
-        {instruments.map((instrument) => (
-          <Accordion.Item key={instrument.id} value={instrument.id}>
-            <Accordion.Control
-              icon={<Building2 size={20} />}
-              onClick={() => onInstrumentSelect(instrument.id)}
-            >
-              {instrument.name}
-            </Accordion.Control>
-            <Accordion.Panel>
-              {exchangesMap[instrument.type]?.map((exchange) => (
-                <NavLink
-                  key={exchange._id}
-                  label={exchange.name}
-                  leftSection={<LineChart size={16} />}
-                  onClick={() => onExchangeSelect(instrument.id, exchange._id)}
-                />
-              ))}
-            </Accordion.Panel>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-    </div>
+    <Accordion>
+      {instruments.map((instrument) => (
+        <Accordion.Item key={instrument.id} value={instrument.id}>
+          <Accordion.Control
+            icon={<Building2 size={20} />}
+            onClick={() => onInstrumentSelect(instrument.id)}
+          >
+            {instrument.name}
+          </Accordion.Control>
+          <Accordion.Panel>
+            {exchangesMap[instrument.type]?.map((exchange) => (
+              <NavLink
+                key={exchange.id}
+                label={exchange.name}
+                leftSection={<LineChart size={16} />}
+                onClick={() => onExchangeSelect(instrument.id, exchange.id)}
+              />
+            ))}
+          </Accordion.Panel>
+        </Accordion.Item>
+      ))}
+    </Accordion>
   );
 }
