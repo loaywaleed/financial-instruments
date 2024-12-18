@@ -6,6 +6,9 @@ import instrumentTypesRoutes from './routes/instrumentTypesRoutes';
 import { globalErrorHandlerMiddleware } from './middleware/errorMiddleware';
 import instrumentRoutes from './routes/instrumentRoutes';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import { options } from './utils/swagger';
 
 const PORT = process.env.PORT || 8000;
 
@@ -23,6 +26,11 @@ app.use(
     optionsSuccessStatus: 204,
   })
 );
+
+// Swagger configuration
+const specs = swaggerJSDoc(options);
+// Doc Routes
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes
 app.use('/api/data', dataRoutes);
