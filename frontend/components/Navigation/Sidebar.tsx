@@ -14,6 +14,7 @@ interface Exchange {
   _id: string;
   name: string;
   nameExchange: string;
+  symbol: string;
 }
 
 export function Sidebar({
@@ -67,7 +68,9 @@ export function Sidebar({
                   key={exchange._id}
                   label={exchange.name}
                   leftSection={<LineChart size={16} />}
-                  onClick={() => onExchangeSelect(instrument.id, exchange._id)}
+                  onClick={() =>
+                    onExchangeSelect(instrument.id, exchange.symbol)
+                  }
                   description={exchange.nameExchange}
                 />
               ))}

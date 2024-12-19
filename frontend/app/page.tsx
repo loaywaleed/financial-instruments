@@ -21,9 +21,12 @@ function App() {
     setSelectedExchange(null);
   };
 
-  const handleExchangeSelect = (instrumentId: string, exchangeId: string) => {
+  const handleExchangeSelect = (
+    instrumentId: string,
+    exchangeSymbol: string
+  ) => {
     setSelectedInstrument(instrumentId);
-    setSelectedExchange(exchangeId);
+    setSelectedExchange(exchangeSymbol);
   };
 
   const selectedInstrumentData = selectedInstrument
@@ -57,7 +60,7 @@ function App() {
           {selectedInstrumentData && (
             <>
               {selectedExchange ? (
-                <CandlestickChart />
+                <CandlestickChart symbol={selectedExchange} />
               ) : (
                 <InstrumentDetails instrument={selectedInstrumentData} />
               )}
