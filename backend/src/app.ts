@@ -35,11 +35,11 @@ const specs = swaggerJSDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes
-app.use('/api/data', dataRoutes);
-app.use('/api/instrumentTypes', instrumentTypesRoutes);
-app.use('/api/instruments', instrumentRoutes);
-app.use('/api/candles', candleRoutes);
-app.use('/api/metadata', metadataRoutes);
+app.use('/api/v1/data', dataRoutes);
+app.use('/api/v1/instrumentTypes', instrumentTypesRoutes);
+app.use('/api/v1/instruments', instrumentRoutes);
+app.use('/api/v1/candles', candleRoutes);
+app.use('/api/v1/metadata', metadataRoutes);
 
 // Global   Error handling middleware
 app.use(globalErrorHandlerMiddleware);
