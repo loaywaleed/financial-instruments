@@ -31,7 +31,7 @@ services:
 
   app-prod:
     build: .
-    container_name: app
+    container_name: app-prod
     ports:
       - "8000:8000"
     depends_on:
