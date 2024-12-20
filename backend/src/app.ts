@@ -11,7 +11,8 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import { options } from './utils/swagger';
 import candleRoutes from './routes/candleRoutes';
 import metadataRoutes from './routes/metadataRoute';
-import { ENV } from './config/environment';
+
+const PORT = process.env.PORT || 8000;
 
 const app: Application = express();
 
@@ -31,9 +32,7 @@ app.use(
 // Swagger configuration
 const specs = swaggerJSDoc(options);
 // Doc Routes
-if (ENV.NODE_ENV === 'development') {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-}
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes
 app.use('/api/v1/data', dataRoutes);
@@ -46,8 +45,8 @@ app.use('/api/v1/metadata', metadataRoutes);
 app.use(globalErrorHandlerMiddleware);
 
 // Start server
-app.listen(ENV.PORT, () => {
-  console.log(`Server is running on port ${ENV.PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 export default app;
