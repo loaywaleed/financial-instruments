@@ -8,32 +8,39 @@ on:
       - 'backend/**'
       - '.github/workflows/deploy.yml'
 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: backend
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to EC2
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-          EC2_USER: ubuntu
-          EC2_HOST: ${{ secrets.EC2_HOST }}
+      - name: Setup SSH
         run: |
-          # Save private key
-          echo "$SSH_PRIVATE_KEY" > /tmp/private_key.pem
-          chmod 600 /tmp/private_key.pem
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" | sed 's/\\n/\n/g' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          # Test SSH connection first
+          if ! ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.EC2_HOST }} 'echo "SSH test successful"'; then
+            echo "SSH connection failed"
+            exit 1
+          fi
           
-          # Copy docker-compose file and project files to EC2
-          scp -o StrictHostKeyChecking=no -i /tmp/private_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/project/
+          # Copy files
+          scp -i ~/.ssh/deploy_key -r ./* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/project/
           
-          # SSH into EC2 and run docker-compose
-          ssh -o StrictHostKeyChecking=no -i /tmp/private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
+          # Deploy
+          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ubuntu/project
             docker-compose down
             docker-compose pull
