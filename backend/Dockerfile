@@ -15,5 +15,5 @@ RUN npm run build
 
 EXPOSE 8000
 
-# Command to start your Node.js app
-CMD ["npm", "start"]
+# # Command to start your Node.js app
+# CMD ["npm", "start"]
