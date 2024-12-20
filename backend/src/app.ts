@@ -16,7 +16,6 @@ import { ENV } from './config/environment';
 const app: Application = express();
 
 // Middlewares
-app.disable('x-powered-by');
 app.use(express.json());
 app.use(helmet());
 app.use(rateLimiterMiddleware);
