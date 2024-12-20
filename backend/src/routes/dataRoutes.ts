@@ -1,5 +1,5 @@
 import express from 'express';
-import { loadData, getmetaData, deleteData } from '../controllers/dataController';
+import { loadData, deleteData } from '../controllers/dataController';
 
 /*@TODO: Add the necessary content for the data controller */
 const dataRoutes = express.Router();
@@ -37,30 +37,6 @@ const dataRoutes = express.Router();
  *         description: Bad request
  */
 dataRoutes.post('/load', loadData);
-
-/**
- * @swagger
- * /api/data:
- *   get:
- *     summary: Get metadata about loaded financial data
- *     tags: [Data]
- *     responses:
- *       200:
- *         description: Retrieved metadata successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 records:
- *                   type: number
- *                 lastUpdated:
- *                   type: string
- *             example:
- *               records: 1000
- *               lastUpdated: "2023-06-14T10:00:00Z"
- */
-dataRoutes.get('/', getmetaData);
 
 /**
  * @swagger

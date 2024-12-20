@@ -10,6 +10,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { options } from './utils/swagger';
 import candleRoutes from './routes/candleRoutes';
+import metadataRoutes from './routes/metadataRoute';
 
 const PORT = process.env.PORT || 8000;
 
@@ -38,6 +39,7 @@ app.use('/api/data', dataRoutes);
 app.use('/api/instrumentTypes', instrumentTypesRoutes);
 app.use('/api/instruments', instrumentRoutes);
 app.use('/api/candles', candleRoutes);
+app.use('/api/metadata', metadataRoutes);
 
 // Global   Error handling middleware
 app.use(globalErrorHandlerMiddleware);

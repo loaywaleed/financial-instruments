@@ -30,15 +30,6 @@ export async function insertDataService(
   }
 }
 
-export async function fetchMetadataService() {
-  try {
-    const db = await connectToDatabase();
-    return db.collection('metadata').find({}).toArray();
-  } catch (error) {
-    throw new ApiError('Failed to fetch data', 400);
-  }
-}
-
 export async function fetchExchangeService() {
   try {
     const db = await connectToDatabase();
