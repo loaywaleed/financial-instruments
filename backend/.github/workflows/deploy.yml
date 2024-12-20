@@ -1,0 +1,35 @@
+name: Futtech CI/CD deployment v1
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          EC2_USER: ubuntu
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+        run: |
+          # Save private key
+          echo "$SSH_PRIVATE_KEY" > /tmp/private_key.pem
+          chmod 600 /tmp/private_key.pem
+          
+          # Copy docker-compose file and project files to EC2
+          scp -o StrictHostKeyChecking=no -i /tmp/private_key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/project/
+          
+          # SSH into EC2 and run docker-compose
+          ssh -o StrictHostKeyChecking=no -i /tmp/private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
+            cd /home/ubuntu/project
+            docker-compose down
+            docker-compose pull
+            docker-compose --profile production up -d
+            docker system prune -f
+          EOF
