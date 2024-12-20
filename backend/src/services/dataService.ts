@@ -51,10 +51,10 @@ export async function fetchCandleService() {
 export async function DeleteAllDataService() {
   try {
     const db = await connectToDatabase();
-    db.collection('metadata').deleteMany({});
-    db.collection('exchange').deleteMany({});
-    db.collection('candle').deleteMany({});
-    db.collection('instrumentTypes').deleteMany({});
+    await db.collection('metadata').deleteMany({});
+    await db.collection('exchange').deleteMany({});
+    await db.collection('candle').deleteMany({});
+    await db.collection('instrumentTypes').deleteMany({});
     return 'Data deleted successfully';
   } catch (error) {
     throw new ApiError('Failed to delete data', 400);
