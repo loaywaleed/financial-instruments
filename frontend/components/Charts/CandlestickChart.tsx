@@ -79,7 +79,7 @@ export function CandlestickChart({ symbol }: { symbol: string }) {
             close: item.endPrice,
           })
         )
-        .sort((a, b) => a.time - b.time);
+        .sort((a, b) => (a.time as number) - (b.time as number));
 
       candlestickSeries.setData(formattedData);
 
