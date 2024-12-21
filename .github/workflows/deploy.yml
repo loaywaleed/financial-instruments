@@ -1,4 +1,4 @@
-name: Futtech CI/CD deployment v1
+name: Futtech CI/CD Pipeline
 
 on:
   push:
@@ -7,43 +7,33 @@ on:
     paths:
       - 'backend/**'
       - '.github/workflows/deploy.yml'
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" | sed 's/\\n/\n/g' > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Deploy to EC2
+        env:
+          HOST: ${{ secrets.EC2_HOST }}
+          USER: ubuntu
         run: |
-          # Test SSH connection first
-          if ! ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ubuntu@${{ secrets.EC2_HOST }} 'echo "SSH test successful"'; then
-            echo "SSH connection failed"
-            exit 1
-          fi
+          ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
+          # Navigate to the deployment directory
+            cd /home/ubuntu/financial-instruments || exit 1
+
+          git pull
           
-          # Copy files
-          scp -i ~/.ssh/deploy_key -r ./* ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/project/
-          
-          # Deploy
-          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/ubuntu/project
-            docker-compose down
-            docker-compose pull
-            docker-compose --profile production up -d
-            docker system prune -f
+          docker-compose down
+          docker-compose pull
+          docker-compose --profile production build
+          docker-compose --profile production up -d
+
           EOF
