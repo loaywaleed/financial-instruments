@@ -27,10 +27,10 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no $USER@$HOST << 'EOF'
           # Navigate to the deployment directory
-            cd /home/ubuntu/financial-instruments || exit 1
+            cd /home/ubuntu/financial-instruments/backend || exit 1
 
           git pull
-          
+
           docker-compose down
           docker-compose pull
           docker-compose --profile production build
