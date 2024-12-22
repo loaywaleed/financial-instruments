@@ -3,7 +3,7 @@ import { logger } from '../utils/logger';
 
 export const rateLimiterMiddleware = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 100000, // limit each IP to 100 requests per windowMs
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
