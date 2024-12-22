@@ -3,12 +3,17 @@ import { useState, useEffect } from "react";
 
 export function useLanguage() {
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem("language") || "en";
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("language") || "en";
+    }
+    return "en";
   });
 
   useEffect(() => {
-    localStorage.setItem("language", language);
-    document.documentElement.lang = language;
+    if (typeof window !== "undefined") {
+      localStorage.setItem("language", language);
+      document.documentElement.lang = language;
+    }
   }, [language]);
 
   return { language, setLanguage };

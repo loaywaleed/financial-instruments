@@ -3,19 +3,23 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 
-/** @type {import('eslint').Linter.Config[]} */
+/** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  {files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"]},
-  {languageOptions: { globals: {...globals.browser, ...globals.node} }},
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  { ignores: ["node_modules/", "dist/", ".next/", "out/", "*.d.ts", "public/"] },
   {
+    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+    languageOptions: {
+      globals: {...globals.browser, ...globals.node}
+    },
     settings: {
       react: {
         version: "detect"
       }
     }
+  },
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+  {
+    ignores: ["node_modules/**", "dist/**", ".next/**", "out/**", "*.d.ts", "public/**"]
   }
 ];
