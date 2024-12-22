@@ -3,8 +3,7 @@ export interface Exchange {
   name: string;
   nameExchange: string;
   symbol: string;
-  price: number;
-  change: number;
-  volume: number;
   codeExchange: string;
+  currency: string;
+  country: string;
 }

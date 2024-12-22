@@ -22,14 +22,11 @@ export function InstrumentDetails({ instrument }: InstrumentDetailsProps) {
           Exchanges
         </Text>
         {instrument.exchanges.map((exchange) => (
-          <Paper key={exchange.id} p="sm" withBorder>
+          <Paper key={exchange._id} p="sm" withBorder>
             <Group justify="space-between">
               <Text>{exchange.name}</Text>
               <Group>
-                <Text fw={500}>${exchange.price.toLocaleString()}</Text>
-                <Badge color={exchange.change >= 0 ? "green" : "red"}>
-                  {exchange.change}%
-                </Badge>
+                <Text fw={500}>${exchange.currency}</Text>
               </Group>
             </Group>
           </Paper>

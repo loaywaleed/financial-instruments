@@ -85,7 +85,7 @@ export function Sidebar({
       ) : (
         <div className="flex-1 overflow-y-auto">
           <Accordion
-            variant="filled"
+            variant="separated"
             value={activeInstrument || ""}
             onChange={(value) => setActiveInstrument(value as string)}
             classNames={{
