@@ -7,9 +7,15 @@ import {
   Box,
   useMantineColorScheme,
 } from "@mantine/core";
-import { LineChart, Sun, Moon } from "lucide-react";
+import { LineChart, Sun, Moon, MenuIcon } from "lucide-react";
+import { LanguageSelector } from "components/Language/LanguageSelector";
 
-export function Header() {
+interface HeaderProps {
+  onMenuClick?: () => void;
+  isMobile?: boolean;
+}
+
+export function Header({ onMenuClick, isMobile = false }: HeaderProps) {
   const { toggleColorScheme, colorScheme } = useMantineColorScheme();
 
   return (
@@ -25,20 +31,32 @@ export function Header() {
       })}
     >
       <Container size="xl" h="100%">
-        <Group justify="space-between" h="100%">
+        <Group justify="space-between" h="100%" px="md">
           <Group>
+            {isMobile && (
+              <ActionIcon
+                variant="subtle"
+                onClick={onMenuClick}
+                aria-label="Toggle menu"
+              >
+                <MenuIcon size={24} color="Black" />
+              </ActionIcon>
+            )}
             <LineChart size={24} />
             <Title order={3}>Financial Instruments</Title>
           </Group>
 
-          <ActionIcon
-            variant="default"
-            onClick={() => toggleColorScheme()}
-            size="lg"
-            aria-label="Toggle color scheme"
-          >
-            {colorScheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </ActionIcon>
+          <Group gap="sm">
+            <LanguageSelector />
+            <ActionIcon
+              variant="default"
+              onClick={() => toggleColorScheme()}
+              size="lg"
+              aria-label="Toggle color scheme"
+            >
+              {colorScheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </ActionIcon>
+          </Group>
         </Group>
       </Container>
     </Box>

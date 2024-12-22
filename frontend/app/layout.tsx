@@ -13,9 +13,7 @@ export const metadata = {
   description: "A simple financial instruments app",
 };
 
-// Customize Mantine theme
 const theme = createTheme({
-  // Example customization: you can add your own theme properties here
   colors: {
     primary: [
       "#E3F2FD",

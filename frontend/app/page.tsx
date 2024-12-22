@@ -1,20 +1,21 @@
 "use client";
 import React, { useState } from "react";
-import { AppShell, Container, Group } from "@mantine/core";
+import { AppShell, Container } from "@mantine/core";
 import { Header } from "components/Layout/Header";
 import { Footer } from "components/Layout/Footer";
 import { Sidebar } from "components/Navigation/Sidebar";
-import { NavigationTabs } from "components/Navigation/NavigationTabs";
 import { CandlestickChart } from "components/Charts/CandlestickChart";
 import { InstrumentDetails } from "components/Content/InstrumentDetails";
 import { instruments } from "data/instrumentsData";
+import { useMediaQuery } from "@mantine/hooks";
 
 function App() {
-  const [activeTab, setActiveTab] = useState("home");
   const [selectedInstrument, setSelectedInstrument] = useState<string | null>(
     null
   );
   const [selectedExchange, setSelectedExchange] = useState<string | null>(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const handleInstrumentSelect = (instrumentId: string) => {
     setSelectedInstrument(instrumentId);
@@ -27,21 +28,31 @@ function App() {
   ) => {
     setSelectedInstrument(instrumentId);
     setSelectedExchange(exchangeSymbol);
+    if (isMobile) {
+      setMobileNavOpen(false);
+    }
   };
 
-  const selectedInstrumentData = selectedInstrument
-    ? instruments.find((i) => i.id === selectedInstrument)
-    : null;
+  const selectedInstrumentData =
+    selectedInstrument && instruments.find((i) => i.id === selectedInstrument);
 
   return (
     <AppShell
       header={{ height: 60 }}
-      footer={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm" }}
+      footer={{ height: "auto" }}
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+        collapsed: { mobile: !mobileNavOpen },
+      }}
       padding="md"
+      className="min-h-screen flex flex-col"
     >
       <AppShell.Header>
-        <Header />
+        <Header
+          onMenuClick={() => setMobileNavOpen(!mobileNavOpen)}
+          isMobile={isMobile}
+        />
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
@@ -53,10 +64,6 @@ function App() {
 
       <AppShell.Main>
         <Container size="xl">
-          <Group mb="md">
-            <NavigationTabs activeTab={activeTab} onTabChange={setActiveTab} />
-          </Group>
-
           {selectedInstrumentData && (
             <>
               {selectedExchange ? (
