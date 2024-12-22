@@ -8,12 +8,15 @@ import { CandlestickChart } from "components/Charts/CandlestickChart";
 import { InstrumentDetails } from "components/Content/InstrumentDetails";
 import { instruments } from "data/instrumentsData";
 import { useMediaQuery } from "@mantine/hooks";
+import { Exchange } from "types/exchange";
 
 function App() {
   const [selectedInstrument, setSelectedInstrument] = useState<string | null>(
     null
   );
-  const [selectedExchange, setSelectedExchange] = useState<string | null>(null);
+  const [selectedExchange, setSelectedExchange] = useState<Exchange | null>(
+    null
+  );
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -22,12 +25,9 @@ function App() {
     setSelectedExchange(null);
   };
 
-  const handleExchangeSelect = (
-    instrumentId: string,
-    exchangeSymbol: string
-  ) => {
+  const handleExchangeSelect = (instrumentId: string, exchange: Exchange) => {
     setSelectedInstrument(instrumentId);
-    setSelectedExchange(exchangeSymbol);
+    setSelectedExchange(exchange);
     if (isMobile) {
       setMobileNavOpen(false);
     }
@@ -62,12 +62,12 @@ function App() {
         />
       </AppShell.Navbar>
 
-      <AppShell.Main>
-        <Container size="xl">
+      <AppShell.Main className="flex-1">
+        <Container size="xl" className="h-full">
           {selectedInstrumentData && (
             <>
               {selectedExchange ? (
-                <CandlestickChart symbol={selectedExchange} />
+                <CandlestickChart {...selectedExchange} />
               ) : (
                 <InstrumentDetails instrument={selectedInstrumentData} />
               )}

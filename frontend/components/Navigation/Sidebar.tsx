@@ -6,18 +6,8 @@ import { instruments } from "data/instrumentsData";
 import { api } from "utils/api";
 import { SidebarHeader } from "./SidebarHeader";
 import { SidebarSearch } from "./SidebarSearch";
-
-interface SidebarProps {
-  onInstrumentSelect: (instrumentId: string) => void;
-  onExchangeSelect: (instrumentId: string, exchangeId: string) => void;
-}
-
-interface Exchange {
-  _id: string;
-  name: string;
-  nameExchange: string;
-  symbol: string;
-}
+import { Exchange } from "types/exchange";
+import { SidebarProps } from "types/sidebar";
 
 export function Sidebar({
   onInstrumentSelect,
@@ -29,6 +19,7 @@ export function Sidebar({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeInstrument, setActiveInstrument] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchExchanges = async (instrumentType: string) => {
@@ -58,8 +49,30 @@ export function Sidebar({
     fetchAllExchanges();
   }, []);
 
+  const getFilteredExchanges = (instrumentType: string) => {
+    const exchanges = exchangesMap[instrumentType] || [];
+    return exchanges.filter(
+      (exchange) =>
+        exchange.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        exchange.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        exchange.nameExchange.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
+  useEffect(() => {
+    if (searchQuery) {
+      for (const instrument of instruments) {
+        const filteredExchanges = getFilteredExchanges(instrument.type);
+        if (filteredExchanges.length > 0) {
+          setActiveInstrument(instrument.id);
+          break;
+        }
+      }
+    }
+  }, [searchQuery]);
+
   return (
-    <Box pos="relative" className="h-full">
+    <Box pos="relative" className="h-full flex flex-col overflow-auto">
       <SidebarHeader />
       <SidebarSearch value={searchQuery} onChange={setSearchQuery} />
 
@@ -70,14 +83,17 @@ export function Sidebar({
           Error loading exchanges data. Please try again later.
         </Box>
       ) : (
-        <div className="h-full overflow-y-auto">
+        <div className="flex-1 overflow-y-auto">
           <Accordion
-            variant="separated"
+            variant="filled"
+            value={activeInstrument || ""}
+            onChange={(value) => setActiveInstrument(value as string)}
             classNames={{
               root: "h-full",
-              item: "transition-all duration-300 ease-in-out",
-              panel: "transition-all duration-300 ease-in-out",
-              content: "transition-all duration-300 ease-in-out",
+              item: "border-b border-gray-200 dark:border-gray-700",
+              control:
+                "hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors",
+              panel: "bg-gray-50 dark:bg-gray-900",
             }}
           >
             {instruments.map((instrument) => (
@@ -89,15 +105,14 @@ export function Sidebar({
                   {instrument.name}
                 </Accordion.Control>
                 <Accordion.Panel>
-                  {exchangesMap[instrument.type]?.map((exchange) => (
+                  {getFilteredExchanges(instrument.type).map((exchange) => (
                     <NavLink
                       key={exchange._id}
                       label={exchange.name}
                       leftSection={<LineChart size={16} />}
-                      onClick={() =>
-                        onExchangeSelect(instrument.id, exchange.symbol)
-                      }
+                      onClick={() => onExchangeSelect(instrument.id, exchange)}
                       description={exchange.nameExchange}
+                      className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     />
                   ))}
                 </Accordion.Panel>

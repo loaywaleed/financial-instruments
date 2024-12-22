@@ -1,11 +1,12 @@
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { createChart, Time } from "lightweight-charts";
 import { Paper } from "@mantine/core";
 import { useMantineColorScheme, useMantineTheme } from "@mantine/core";
 import { api } from "utils/api";
+import { Exchange } from "types/exchange";
+import { ChartHeader } from "./ChartHeader";
 
-export function CandlestickChart({ symbol }: { symbol: string }) {
+export function CandlestickChart(exchange: Exchange) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const { colorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
@@ -14,7 +15,7 @@ export function CandlestickChart({ symbol }: { symbol: string }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get(`/candles?symbol=${symbol}`);
+        const response = await api.get(`/candles?symbol=${exchange.symbol}`);
         const result = await response.data;
         console.log("Candlestick data:", result);
         setData(result);
@@ -24,7 +25,7 @@ export function CandlestickChart({ symbol }: { symbol: string }) {
     }
 
     fetchData();
-  }, [symbol]);
+  }, [exchange]);
 
   useEffect(() => {
     if (chartContainerRef.current && data.length > 0) {
@@ -91,8 +92,17 @@ export function CandlestickChart({ symbol }: { symbol: string }) {
   }, [data, colorScheme, theme]);
 
   return (
-    <Paper p="md" style={{ width: "100%", height: 400 }}>
-      <div ref={chartContainerRef} style={{ width: "100%", height: "100%" }} />
-    </Paper>
+    <div className="space-y-4">
+      <ChartHeader {...exchange} />
+
+      <Paper p="md" withBorder>
+        <div
+          ref={chartContainerRef}
+          className="w-full h-[400px]"
+          role="img"
+          aria-label={`Candlestick chart for ${exchange.symbol}`}
+        />
+      </Paper>
+    </div>
   );
 }
