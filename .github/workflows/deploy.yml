@@ -20,6 +20,21 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Run Jest tests
+        run: |
+          cd backend
+          npm test    
+
       - name: Deploy to EC2
         env:
           HOST: ${{ secrets.EC2_HOST }}
