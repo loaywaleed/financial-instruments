@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import { ApiError } from '../utils/apiErrorHandler';
 
 let client: MongoClient;
 export const connectToDatabase = async () => {
@@ -8,7 +9,7 @@ export const connectToDatabase = async () => {
       await client.connect();
     } catch (error) {
       console.error('Failed to connect to the database', error);
-      throw new Error('Database connection failed');
+      throw new ApiError('Database connection failed', 500);
     }
   }
   return client.db('myDatabase');
