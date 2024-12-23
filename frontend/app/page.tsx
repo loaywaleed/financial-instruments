@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { AppShell, Container } from "@mantine/core";
 import { Header } from "components/Layout/Header";
-import { Footer } from "components/Layout/Footer";
 import { Sidebar } from "components/Navigation/Sidebar";
 import { CandlestickChart } from "components/Charts/CandlestickChart";
 import { InstrumentDetails } from "components/Content/InstrumentDetails";
@@ -39,7 +38,6 @@ function App() {
   return (
     <AppShell
       header={{ height: 60 }}
-      footer={{ height: "auto" }}
       navbar={{
         width: 300,
         breakpoint: "sm",
@@ -75,10 +73,6 @@ function App() {
           )}
         </Container>
       </AppShell.Main>
-
-      <AppShell.Footer>
-        <Footer />
-      </AppShell.Footer>
     </AppShell>
   );
 }

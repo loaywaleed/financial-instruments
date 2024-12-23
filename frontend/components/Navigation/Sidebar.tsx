@@ -72,55 +72,65 @@ export function Sidebar({
   }, [searchQuery]);
 
   return (
-    <Box pos="relative" className="h-full flex flex-col overflow-auto">
-      <SidebarHeader />
-      <SidebarSearch value={searchQuery} onChange={setSearchQuery} />
-
-      <LoadingOverlay visible={isLoading} />
-
-      {hasError ? (
-        <Box p="md" c="red">
-          Error loading exchanges data. Please try again later.
-        </Box>
-      ) : (
-        <div className="flex-1 overflow-y-auto">
-          <Accordion
-            variant="separated"
-            value={activeInstrument || ""}
-            onChange={(value) => setActiveInstrument(value as string)}
-            classNames={{
-              root: "h-full",
-              item: "border-b border-gray-200 dark:border-gray-700",
-              control:
-                "hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors",
-              panel: "bg-gray-50 dark:bg-gray-900",
-            }}
-          >
-            {instruments.map((instrument) => (
-              <Accordion.Item key={instrument.id} value={instrument.id}>
-                <Accordion.Control
-                  icon={<Building2 size={20} />}
-                  onClick={() => onInstrumentSelect(instrument.id)}
-                >
-                  {instrument.name}
-                </Accordion.Control>
-                <Accordion.Panel>
-                  {getFilteredExchanges(instrument.type).map((exchange) => (
-                    <NavLink
-                      key={exchange._id}
-                      label={exchange.name}
-                      leftSection={<LineChart size={16} />}
-                      onClick={() => onExchangeSelect(instrument.id, exchange)}
-                      description={exchange.nameExchange}
-                      className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    />
-                  ))}
-                </Accordion.Panel>
-              </Accordion.Item>
-            ))}
-          </Accordion>
+    <Box
+      pos="relative"
+      className="h-full overflow-y-hidden"
+      style={{ overflowY: "auto", scrollbarWidth: "none" }}
+    >
+      <div className="flex flex-col h-full">
+        <div className="flex-none">
+          <SidebarHeader />
+          <SidebarSearch value={searchQuery} onChange={setSearchQuery} />
         </div>
-      )}
+
+        <LoadingOverlay visible={isLoading} />
+
+        {hasError ? (
+          <Box p="md" c="red">
+            Error loading exchanges data. Please try again later.
+          </Box>
+        ) : (
+          <Box className="overflow-y-auto">
+            <Accordion
+              variant="separated"
+              value={activeInstrument || ""}
+              onChange={(value) => setActiveInstrument(value as string)}
+              classNames={{
+                root: "pb-4",
+                item: "border-b border-gray-200 dark:border-gray-700",
+                control:
+                  "hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors",
+                panel: "bg-gray-50 dark:bg-gray-900",
+              }}
+            >
+              {instruments.map((instrument) => (
+                <Accordion.Item key={instrument.id} value={instrument.id}>
+                  <Accordion.Control
+                    icon={<Building2 size={20} />}
+                    onClick={() => onInstrumentSelect(instrument.id)}
+                  >
+                    {instrument.name}
+                  </Accordion.Control>
+                  <Accordion.Panel>
+                    {getFilteredExchanges(instrument.type).map((exchange) => (
+                      <NavLink
+                        key={exchange._id}
+                        label={exchange.name}
+                        leftSection={<LineChart size={16} />}
+                        onClick={() =>
+                          onExchangeSelect(instrument.id, exchange)
+                        }
+                        description={exchange.nameExchange}
+                        className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      />
+                    ))}
+                  </Accordion.Panel>
+                </Accordion.Item>
+              ))}
+            </Accordion>
+          </Box>
+        )}
+      </div>
     </Box>
   );
 }
