@@ -5,6 +5,7 @@ import { useMantineColorScheme, useMantineTheme } from "@mantine/core";
 import { api } from "utils/api";
 import { Exchange } from "types/exchange";
 import { ChartHeader } from "./ChartHeader";
+import { PerformanceMetric } from "./PerformanceMetric";
 
 export function CandlestickChart(exchange: Exchange) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -103,6 +104,8 @@ export function CandlestickChart(exchange: Exchange) {
           aria-label={`Candlestick chart for ${exchange.symbol}`}
         />
       </Paper>
+
+      <PerformanceMetric symbol={exchange.symbol} />
     </div>
   );
 }
