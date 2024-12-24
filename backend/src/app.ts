@@ -11,8 +11,9 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import { options } from './utils/swagger';
 import candleRoutes from './routes/candleRoutes';
 import metadataRoutes from './routes/metadataRoute';
+import { ENV } from './config/environment';
 
-const PORT = process.env.PORT || 8000;
+const PORT = ENV.PORT || 8000;
 
 const app: Application = express();
 
@@ -20,19 +21,23 @@ const app: Application = express();
 app.use(express.json());
 app.use(helmet());
 app.use(rateLimiterMiddleware);
-app.use(
-  cors({
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  })
-);
 
 // Swagger configuration
-const specs = swaggerJSDoc(options);
 // Doc Routes
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+console.log(ENV.NODE_ENV);
+if (ENV.NODE_ENV === 'development') {
+  app.use(
+    cors({
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    })
+  );
+  const specs = swaggerJSDoc(options);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+}
 
 // Routes
 app.use('/api/v1/data', dataRoutes);

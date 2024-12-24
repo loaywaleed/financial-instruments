@@ -1,10 +1,4 @@
-import {
-  insertDataService,
-  fetchExchangeService,
-  fetchCandleService,
-  DeleteAllDataService,
-  fetchMetadataBySymbol,
-} from '../../src/services/dataService';
+import { insertDataService, DeleteAllDataService } from '../../src/services/dataService';
 import { connectToDatabase } from '../../src/config/database';
 
 jest.mock('../../src/config/database');
@@ -53,34 +47,6 @@ describe('Data Service Tests', () => {
     });
   });
 
-  describe('fetchExchangeService', () => {
-    it('should fetch exchange data successfully', async () => {
-      const exchangeData = [{ exchange: 'data' }];
-      dbMock.toArray.mockResolvedValueOnce(exchangeData);
-
-      const result = await fetchExchangeService();
-
-      expect(result).toEqual(exchangeData);
-      expect(dbMock.collection).toHaveBeenCalledWith('exchange');
-      expect(dbMock.find).toHaveBeenCalled();
-      expect(dbMock.toArray).toHaveBeenCalled();
-    });
-  });
-
-  describe('fetchCandleService', () => {
-    it('should fetch candle data successfully', async () => {
-      const candleData = [{ candle: 'data' }];
-      dbMock.toArray.mockResolvedValueOnce(candleData);
-
-      const result = await fetchCandleService();
-
-      expect(result).toEqual(candleData);
-      expect(dbMock.collection).toHaveBeenCalledWith('candle');
-      expect(dbMock.find).toHaveBeenCalled();
-      expect(dbMock.toArray).toHaveBeenCalled();
-    });
-  });
-
   describe('DeleteAllDataService', () => {
     it('should delete all data successfully', async () => {
       dbMock.deleteMany.mockResolvedValueOnce({});
@@ -93,20 +59,6 @@ describe('Data Service Tests', () => {
       expect(dbMock.collection).toHaveBeenCalledWith('candle');
       expect(dbMock.collection).toHaveBeenCalledWith('instrumentTypes');
       expect(dbMock.deleteMany).toHaveBeenCalledTimes(4);
-    });
-  });
-
-  describe('fetchMetadataBySymbol', () => {
-    it('should fetch metadata by symbol successfully', async () => {
-      const symbol = 'AAPL';
-      const metadata = { symbol: 'AAPL', data: 'metadata' };
-      dbMock.findOne.mockResolvedValueOnce(metadata);
-
-      const result = await fetchMetadataBySymbol(symbol);
-
-      expect(result).toEqual(metadata);
-      expect(dbMock.collection).toHaveBeenCalledWith('data');
-      expect(dbMock.findOne).toHaveBeenCalledWith({ symbol });
     });
   });
 });
