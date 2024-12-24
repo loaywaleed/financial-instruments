@@ -1,9 +1,6 @@
+/* Desc: Data Controller for managing data*/
 import { Request, Response } from 'express';
-import {
-  insertDataService,
-  fetchMetadataBySymbol,
-  DeleteAllDataService,
-} from '../services/dataService';
+import { insertDataService, DeleteAllDataService } from '../services/dataService';
 import metadata from '../data/metadata.json';
 import exchange from '../data/exchange.json';
 import candle from '../data/candle.json';

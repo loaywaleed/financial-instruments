@@ -1,4 +1,4 @@
-import { getCandleBySymbolService, fetchCandlesService } from '../services/candlesService';
+/* Desc: Metadata Controller for managing metadata*/
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';
 import { fetchMetadataService } from '../services/metadataService';

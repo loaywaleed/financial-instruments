@@ -1,6 +1,13 @@
+/* Data service to insert and delete data from the database. */
 import { connectToDatabase } from '../config/database';
 import { ApiError } from '../utils/apiErrorHandler';
 
+/**
+ * Deletes all data from the database.
+ *
+ * @returns A promise that resolves to a success message.
+ * @throws {ApiError} If there is an error deleting the data.
+ */
 export async function insertDataService(
   metadata_raw: any,
   exchange_raw: any,
@@ -30,24 +37,12 @@ export async function insertDataService(
   }
 }
 
-export async function fetchExchangeService() {
-  try {
-    const db = await connectToDatabase();
-    return db.collection('exchange').find({}).toArray();
-  } catch (error) {
-    throw new ApiError('Failed to fetch data', 400);
-  }
-}
-
-export async function fetchCandleService() {
-  try {
-    const db = await connectToDatabase();
-    return db.collection('candle').find({}).toArray();
-  } catch (error) {
-    throw new ApiError('Failed to fetch data', 400);
-  }
-}
-
+/**
+ * Delete data .
+ *
+ * @returns A promise that resolves to a deleted message.
+ * @throws {ApiError} If there is an error deleting the data.
+ */
 export async function DeleteAllDataService() {
   try {
     const db = await connectToDatabase();
@@ -58,18 +53,5 @@ export async function DeleteAllDataService() {
     return 'Data deleted successfully';
   } catch (error) {
     throw new ApiError('Failed to delete data', 400);
-  }
-}
-
-export async function fetchMetadataBySymbol(symbol: string) {
-  try {
-    const db = await connectToDatabase();
-    const result = db.collection('data').findOne({ symbol });
-    if (!result) {
-      throw new ApiError('Data not found', 404);
-    }
-    return result;
-  } catch (error) {
-    throw new ApiError('Failed to fetch data', 400);
   }
 }

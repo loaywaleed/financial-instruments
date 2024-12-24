@@ -1,3 +1,4 @@
+/* Desc: Swagger setup */
 import { Options } from 'swagger-jsdoc';
 
 const swaggerDefinition: Options['swaggerDefinition'] = {
@@ -5,11 +6,11 @@ const swaggerDefinition: Options['swaggerDefinition'] = {
   info: {
     title: 'Futtech Financial Instruments API Documentation',
     version: '1.0.0',
-    description: 'This is the API documentation for my Express app',
+    description: 'Financial instruments API documentation',
   },
   servers: [
     {
-      url: 'http://localhost:8000', // Server URL
+      url: 'http://localhost:8000',
       description: 'Local development server',
     },
   ],
@@ -17,5 +18,5 @@ const swaggerDefinition: Options['swaggerDefinition'] = {
 
 export const options = {
   swaggerDefinition,
-  apis: ['./src/routes/**/*.ts'], // Path to the API docs
+  apis: ['./src/routes/**/*.ts'],
 };

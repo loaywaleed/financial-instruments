@@ -1,8 +1,13 @@
+/* Database connection module*/
 import { MongoClient } from 'mongodb';
 import { ApiError } from '../utils/apiErrorHandler';
 
 let client: MongoClient | null = null;
 
+/**
+ * @summary - Connects to the database
+ * @returns {Promise<MongoClient>} - Returns a promise that resolves to a MongoClient instance
+ */
 export const connectToDatabase = async () => {
   if (!client) {
     try {

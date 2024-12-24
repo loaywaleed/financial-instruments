@@ -3,6 +3,7 @@ import { Text, Loader } from "@mantine/core";
 import { api } from "utils/api";
 import { MetadataType } from "types/MetadataType";
 import { Identification } from "./Metadata/Identification";
+import { InstrumentCategory } from "./Metadata/InstrumentCategory";
 
 interface PerformanceMetricProps {
   symbol: string;
@@ -37,5 +38,10 @@ export function Metadata({ symbol }: PerformanceMetricProps) {
   if (error) return <Text color="red">{error}</Text>;
   if (!metadata) return null;
 
-  return <Identification {...metadata} />;
+  return (
+    <div>
+      <Identification {...metadata} />
+      <InstrumentCategory {...metadata} />
+    </div>
+  );
 }

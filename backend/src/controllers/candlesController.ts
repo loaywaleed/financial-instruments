@@ -1,3 +1,4 @@
+/* Candles Controller */
 import { getCandleBySymbolService, fetchCandlesService } from '../services/candlesService';
 import asyncHandler from 'express-async-handler';
 import { Request, Response } from 'express';

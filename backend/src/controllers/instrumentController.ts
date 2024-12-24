@@ -1,3 +1,4 @@
+/* Desc: Instrument controller for handling instrument routes */
 import {
   fetchAllInstrumentsService,
   fetchInstrumentBySymbolService,
@@ -24,7 +25,7 @@ export const getAllInstruments = asyncHandler(async (req: Request, res: Response
 });
 
 /**
- * @route GET /api/instruments/:id
+ * @route GET /api/instruments?symbol={symbol}
  * @summary Get instrument by symbol
  * @returns {200} - Retrieved instrument by symbol successfully
  * @returns {404} - Instrument not found

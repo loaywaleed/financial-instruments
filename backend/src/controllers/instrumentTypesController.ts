@@ -1,3 +1,4 @@
+/* Desc: Instrument types controller for handling instrument types routes */
 import asyncHandler from 'express-async-handler';
 import { fetchAllInstrumentTypesService } from '../services/instrumentService';
 

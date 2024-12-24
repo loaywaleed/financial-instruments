@@ -1,3 +1,4 @@
+/* enviuroment variables */
 import dotenv from 'dotenv';
 dotenv.config();
 

@@ -1,6 +1,13 @@
+/* Desc: Metadata service for handling metadata routes */
 import { connectToDatabase } from '../config/database';
 import { ApiError } from '../utils/apiErrorHandler';
 
+/**
+ * Fetches metadata from the database.
+ * @optional  symbol - The symbol of the financial instrument to fetch metadata for.
+ * @returns A promise that resolves to the metadata of the financial instrument.
+ * @throws {ApiError} If there is an error while fetching the data.
+ */
 export async function fetchMetadataService(symbol: string | null) {
   if (symbol) {
     return fetchMetadataBySymbolService(symbol);
@@ -9,6 +16,11 @@ export async function fetchMetadataService(symbol: string | null) {
   }
 }
 
+/**
+ * Fetches all metadata.
+ * @returns A promise that resolves to the metadata of the financial instrument.
+ * @throws {ApiError} If there is an error while fetching the data.
+ */
 export async function fetchAllMetadataService() {
   try {
     const db = await connectToDatabase();
@@ -18,6 +30,12 @@ export async function fetchAllMetadataService() {
   }
 }
 
+/**
+ * Fetches metadata for a given financial instrument symbol from the database.
+ * @param {string} symbol - The symbol of the financial instrument to fetch metadata for.
+ * @returns A promise that resolves to the metadata of the financial instrument.
+ * @throws {ApiError} If there is an error while fetching the data.
+ */
 export async function fetchMetadataBySymbolService(symbol: string) {
   try {
     const db = await connectToDatabase();

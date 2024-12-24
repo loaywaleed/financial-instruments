@@ -1,11 +1,11 @@
+/* Desc: Data routes */
 import express from 'express';
 import { loadData, deleteData } from '../controllers/dataController';
 
-/*@TODO: Add the necessary content for the data controller */
 const dataRoutes = express.Router();
 /**
  * @swagger
- * /api/data/load:
+ * /api/v1/data/load:
  *   post:
  *     summary: Load financial data
  *     tags: [Data]
@@ -40,7 +40,7 @@ dataRoutes.post('/load', loadData);
 
 /**
  * @swagger
- * /api/data:
+ * /api/v1/data:
  *   delete:
  *     summary: Delete all loaded financial data
  *     tags: [Data]
