@@ -21,10 +21,18 @@ const app: Application = express();
 app.use(express.json());
 app.use(helmet());
 app.use(rateLimiterMiddleware);
+if (ENV.NODE_ENV === 'production') {
+  app.use(
+    cors({
+      origin: 'https://financial-instruments.vercel.app/',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    })
+  );
+}
 
-// Swagger configuration
 // Doc Routes
-
 console.log(ENV.NODE_ENV);
 if (ENV.NODE_ENV === 'development') {
   app.use(
@@ -46,7 +54,7 @@ app.use('/api/v1/instruments', instrumentRoutes);
 app.use('/api/v1/candles', candleRoutes);
 app.use('/api/v1/metadata', metadataRoutes);
 
-// Global   Error handling middleware
+// Global Error handling middleware
 app.use(globalErrorHandlerMiddleware);
 
 // Start server
