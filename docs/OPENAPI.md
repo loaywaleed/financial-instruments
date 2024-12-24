@@ -3,6 +3,7 @@
 - All Controllers and Services have been documented
 - Swagger/OpenAPI Spec for endpoints
 - OPENAPI.json spec file included
+- Rate limiter for the API
 
 
 # Pics and references
