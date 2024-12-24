@@ -6,6 +6,7 @@ import { api } from "utils/api";
 import { Exchange } from "types/exchange";
 import { ChartHeader } from "./ChartHeader";
 import { PerformanceMetric } from "./PerformanceMetric";
+import { Metadata } from "./Metadata";
 
 export function CandlestickChart(exchange: Exchange) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -106,6 +107,7 @@ export function CandlestickChart(exchange: Exchange) {
       </Paper>
 
       <PerformanceMetric symbol={exchange.symbol} />
+      <Metadata symbol={exchange.symbol} />
     </div>
   );
 }

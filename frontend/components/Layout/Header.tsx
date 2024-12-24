@@ -17,6 +17,8 @@ interface HeaderProps {
 
 export function Header({ onMenuClick, isMobile = false }: HeaderProps) {
   const { toggleColorScheme, colorScheme } = useMantineColorScheme();
+  const iconSize = isMobile ? 20 : 24;
+  const actionIconSize = isMobile ? "md" : "lg";
 
   return (
     <Box
@@ -31,30 +33,35 @@ export function Header({ onMenuClick, isMobile = false }: HeaderProps) {
       })}
     >
       <Container size="xl" h="100%">
-        <Group justify="space-between" h="100%" px="md">
+        <Group justify="space-between" h="100%" px={isMobile ? "xs" : "md"}>
           <Group>
             {isMobile && (
               <ActionIcon
                 variant="subtle"
                 onClick={onMenuClick}
                 aria-label="Toggle menu"
+                size={actionIconSize}
               >
-                <MenuIcon size={24} color="Black" />
+                <MenuIcon size={iconSize} color="Black" />
               </ActionIcon>
             )}
-            <LineChart size={24} />
-            <Title order={3}>Financial Instruments</Title>
+            <LineChart size={iconSize} />
+            <Title order={isMobile ? 4 : 3}>Financial Instruments</Title>
           </Group>
 
-          <Group gap="sm">
+          <Group gap={isMobile ? "xs" : "sm"}>
             <LanguageSelector />
             <ActionIcon
               variant="default"
               onClick={() => toggleColorScheme()}
-              size="lg"
+              size={actionIconSize}
               aria-label="Toggle color scheme"
             >
-              {colorScheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              {colorScheme === "dark" ? (
+                <Sun size={isMobile ? 16 : 18} />
+              ) : (
+                <Moon size={isMobile ? 16 : 18} />
+              )}
             </ActionIcon>
           </Group>
         </Group>

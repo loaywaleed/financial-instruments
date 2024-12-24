@@ -13,7 +13,7 @@ interface PerformanceMetricProps {
 }
 
 export function PerformanceMetric({ symbol }: PerformanceMetricProps) {
-  const [metadata, setMetadata] = useState<MetadataType | null>(null);
+  const [metadata, setMetadata] = useState<MetadataType | "">(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,7 +24,12 @@ export function PerformanceMetric({ symbol }: PerformanceMetricProps) {
         const response = await api.get(`/metadata?symbol=${symbol}`);
         if (!response) throw new Error("Failed to fetch metadata");
         const data = await response.data;
-        setMetadata(data.exchangeTradedFundDetails.performance);
+        if (!data.exchangeTradedFundDetails) {
+          setMetadata("");
+          console.log("No performance data available");
+        } else {
+          setMetadata(data.exchangeTradedFundDetails.performance);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch data");
       } finally {
@@ -39,7 +44,8 @@ export function PerformanceMetric({ symbol }: PerformanceMetricProps) {
 
   if (loading) return <Loader size="sm" />;
   if (error) return <Text color="red">{error}</Text>;
-  if (!metadata) return null;
+
+  if (!metadata) return "";
 
   return (
     <Paper p="md" mt="md" withBorder>

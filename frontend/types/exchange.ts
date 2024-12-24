@@ -6,4 +6,5 @@ export interface Exchange {
   codeExchange: string;
   currency: string;
   country: string;
+  ticker: string;
 }
