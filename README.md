@@ -1,8 +1,7 @@
 
 <a name="readme-top"></a>
 
-[![MIT License][license-shield]][license-url]
-[![Changelog][changelog-shield]][changelog-url]
+
 [![Build Status][build-shield]][build-url]
 
 [build-shield]: https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge
@@ -23,7 +22,6 @@
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -41,10 +39,10 @@
       </ul>
     </li>
     <li><a href="#infrastructure">Infrastructure</a></li>
-    <li><a href="#CI/CD">CI/CD</a></li>
+    <li><a href="#CICD">CI/CD</a></li>
+    <li><a href="#Coding-Standard">Coding Standard</a></li>
     <li><a href="#Features">Features</a></li>
-    <li><a href="#API Documentation">API documentation</a></li>
-    <li><a href="#More">More</a></li>
+    <li><a href="#Documentation">API documentation</a></li>
   </ol>
 </details>
 
@@ -174,7 +172,8 @@ npm run dev
 For detailed information, visit the documentation:
 - [Architecture](docs/ARCHITECTURE.md)
 - [API Reference](docs/OPENAPI.md)
-- [Decisions and Questions](docs/DECISIONS.MD)
+- [Decisions and Questions](docs/DECISIONS.md)
+- [Demo](docs/demo.md)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
