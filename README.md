@@ -173,7 +173,7 @@ For detailed information, visit the documentation:
 - [Architecture](docs/ARCHITECTURE.md)
 - [API Reference](docs/OPENAPI.md)
 - [Decisions and Questions](docs/DECISIONS.md)
-- [Demo](docs/demo.md)
+- [Demo](docs/DEMO.md)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
