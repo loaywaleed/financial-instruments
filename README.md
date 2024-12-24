@@ -42,6 +42,8 @@
     <li><a href="#CICD">CI/CD</a></li>
     <li><a href="#Coding-Standard">Coding Standard</a></li>
     <li><a href="#Features">Features</a></li>
+    <li><a href="#Security">API documentation</a></li>
+    <li><a href="#Testing">API documentation</a></li>
     <li><a href="#Documentation">API documentation</a></li>
   </ol>
 </details>
@@ -163,7 +165,19 @@ npm run dev
 - Language switchers
 - Responsive Design
 - SE0 Optimized (90% on google lighthouse)
+- Good performance
+- Swagger API docs
 
+
+## Security
+
+- Used rate limiting on the publically accessible API to prevent Denial of Service attacks and server overload
+
+## Testing
+```bash
+npm test # to run tests
+```
+- Tested all services, controllers and middlewares using Jest
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -176,7 +190,6 @@ For detailed information, visit the documentation:
 - [Demo](docs/DEMO.md)
 
 
-<!-- MARKDOWN LINKS & IMAGES -->
 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: https://github.com/AsserElshafey/best-version-of-your-self/blob/main/LICENSE.txt
