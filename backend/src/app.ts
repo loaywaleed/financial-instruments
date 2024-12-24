@@ -12,6 +12,7 @@ import { options } from './utils/swagger';
 import candleRoutes from './routes/candleRoutes';
 import metadataRoutes from './routes/metadataRoute';
 import { ENV } from './config/environment';
+import fs from 'fs';
 
 const PORT = ENV.PORT || 8000;
 
@@ -44,6 +45,7 @@ if (ENV.NODE_ENV === 'development') {
     })
   );
   const specs = swaggerJSDoc(options);
+  fs.writeFileSync('openapi.json', JSON.stringify(specs, null, 2));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 }
 
