@@ -1,7 +1,9 @@
 # Questions and Decisions
 
-## Tech Stack
+#### Note: all of the answers are based on my current knowledge, I definitely welcome being corrected and guided if there is any false reasoning.
 
+
+## Tech Stack
 
 ### - Frontend:
 
@@ -55,4 +57,16 @@ It's a fast battle tested web server, that I am also comfortable using.
 #### Why Github Actions and not Jenkins or any other ci/cd tool?
 Reduced complexity (less moving parts), ease of use and maintenance, and good integration with github.
 
-####
+
+## What could be improved
+
+### Frontend
+- Use preload on hover to reduce network payload
+- Cache data
+- Improve page load times
+- Use algolia search for faster search
+
+### Backend
+- Use Redis
+- Add more data validation for insertions
+
